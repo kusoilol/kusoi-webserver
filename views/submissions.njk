@@ -1,0 +1,20 @@
+{% extends "layout.njk" %}
+
+{% block title %}KUSOI - Посылки{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Номер посылки</th>
+            <th>Код</th>
+        </tr>
+        {% for submission in submissions %}
+            <tr>
+                <td>{{ submission.id }}</td>
+                <td>{{ submission.code }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

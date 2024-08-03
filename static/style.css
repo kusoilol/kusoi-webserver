@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    color: black;
+}
+
+a:hover {
+    color: #A0A0A0;
+}
+
+.header-wrapper {
+    padding: 1em;
+    display: flex;
+    border-bottom: 1px solid #a9a9a9;
+}
+
+.header-filler {
+    flex-grow: 2;
+}
+
+.header-wrapper > a {
+    margin-right: 1em;
+}
+
+.content-wrapper {
+    padding: 1em;
+    display: flex;
+}
+

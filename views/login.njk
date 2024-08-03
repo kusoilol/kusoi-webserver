@@ -1,0 +1,16 @@
+{% extends "layout.njk" %}
+
+{% block title %}KUSOI - Авторизация{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <form action="/login" method="POST">
+        <select name="user_id" id="user_id">
+            {% for user in users %}
+                <option value="{{ user._id }}" {% if user._id == 1 %}selected{% endif %}>{{ user.name }}</option>
+            {% endfor %}
+        </select>
+        <input type="password" placeholder="Пароль" name="password">
+    </form>
+{% endblock %}

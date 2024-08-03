@@ -1,0 +1,22 @@
+{% extends "layout.njk" %}
+
+{% block title %}KUSOI - Положение{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>Команда</th>
+            <th>Δ</th>
+            <th>Общий счёт</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.name }}</td>
+                <td>{{ user.score_delta }}</td>
+                <td>{{ user.score }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
