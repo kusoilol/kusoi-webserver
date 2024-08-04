@@ -7,6 +7,7 @@ const JWT = require('jsonwebtoken');
 const router = express.Router();
 
 const { Users } = require('../db')
+const busboy = require("busboy");
 
 function authorize(req, res, next) {
     if (!req.user) return next(createError(401));
@@ -45,6 +46,19 @@ router.get('/logout', async function(req, res) {
 router.get('/submissions', authorize, async function(req, res) {
     const submissions = [{ id: 1, code: "print('Hello World...')" }, { id: 2, code: "print('Hello World!')" }]; // Посылки нужно получать с другого сервера
     res.status(200).render('submissions', { user: req.user, submissions: submissions.toSorted((a, b) => b.id - a.id) });
+});
+
+router.post('/submit', authorize, async function(req, res) {
+    const bb = busboy({ headers: req.headers });
+    bb.on('file', function (fieldname, file, filename) {
+        console.log(req.user.name);
+        file.pipe(process.stdout);
+    });
+    bb.on('finish', function() {
+        console.log('-----')
+        res.redirect('/submissions');
+    });
+    return req.pipe(bb);
 });
 
 router.get('/user', authorize, async function(req, res) {

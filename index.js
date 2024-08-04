@@ -2,6 +2,7 @@ const SERVER_PORT = Number(process.env.SERVER_PORT) || 8080;
 const SERVER_HOST = process.env.HOST || '0.0.0.0';
 const SECRET = process.env.SECRET || 'development';
 
+const index_router = require('./routers/index');
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const nunjucks = require('nunjucks');
@@ -11,8 +12,6 @@ const { Strategy: JwtStrategy } = require('passport-jwt');
 const logger = require('morgan');
 const createError = require('http-errors');
 const path = require("path");
-
-const index_router = require('./routers/index');
 
 // App setup
 

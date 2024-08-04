@@ -32,5 +32,15 @@ a:hover {
 .content-wrapper {
     padding: 1em;
     display: flex;
+    flex-direction: column;
+    gap: 1em;
 }
 
+.content-wrapper > table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.content-wrapper > table th, .content-wrapper > table td {
+    border: 1px solid #a9a9a9;
+}
