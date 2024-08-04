@@ -3,6 +3,7 @@ const SERVER_HOST = process.env.HOST || '0.0.0.0';
 const SECRET = process.env.SECRET || 'development';
 
 const index_router = require('./routers/index');
+const admin_router = require('./routers/admin');
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const nunjucks = require('nunjucks');
@@ -12,6 +13,7 @@ const { Strategy: JwtStrategy } = require('passport-jwt');
 const logger = require('morgan');
 const createError = require('http-errors');
 const path = require("path");
+const {Users} = require("./db");
 
 // App setup
 
@@ -25,23 +27,41 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // JWT setup
 
-const JwtStrategyOptions = {
+const UserJwtStrategyOptions = {
     jwtFromRequest: (req) => (req && req.cookies) ? req.cookies['jwt'] : undefined,
     secretOrKey: SECRET
 };
 
-passport.use(new JwtStrategy(JwtStrategyOptions, function(jwt_payload, done) {
+const AdminJwtStrategyOptions = {
+    jwtFromRequest: (req) => (req && req.cookies) ? req.cookies['admin_jwt'] : undefined,
+    secretOrKey: SECRET
+};
+
+passport.use('userJWT', new JwtStrategy(UserJwtStrategyOptions, function(jwt_payload, done) {
+    const user = Users.findOne({ _id: jwt_payload.id });
+    return done(null, user);
+}));
+
+passport.use('adminJWT', new JwtStrategy(AdminJwtStrategyOptions, function(jwt_payload, done) {
     return done(null, jwt_payload);
 }));
 
 const authorize = function(req, res, next) {
-    passport.authenticate('jwt', (err, user) => {
+    passport.authenticate('userJWT', (err, user) => {
         req.user = user || null;
         next();
     })(req, res, next);
 };
 
+const authorizeAdmin = function(req, res, next) {
+    passport.authenticate('adminJWT', (err, payload) => {
+        req.isAdmin = payload.isAdmin || false;
+        next();
+    })(req, res, next);
+};
+
 app.use(authorize);
+app.use(authorizeAdmin);
 
 // Nunjucks setup
 
@@ -55,6 +75,7 @@ app.set('view engine', 'njk');
 // Routers
 
 app.use('/', index_router);
+app.use('/admin/', admin_router);
 
 // Error handling
 

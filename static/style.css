@@ -36,11 +36,11 @@ a:hover {
     gap: 1em;
 }
 
-.content-wrapper > table {
+.content-wrapper table {
     border-spacing: 0;
     border-collapse: collapse;
 }
 
-.content-wrapper > table th, .content-wrapper > table td {
+.content-wrapper table th, .content-wrapper table td {
     border: 1px solid #a9a9a9;
 }

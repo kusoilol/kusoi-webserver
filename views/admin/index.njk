@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+{% block title %}KUSOI - Администрация{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Имя</th>
+            <th>Пароль</th>
+            <th>Действие</th>
+        </tr>
+        {% for user in users %}
+            <form action="/admin/edit" method="post" id="form-{{ user._id }}">
+                <tr>
+                    <td>{{ user._id }}<input type="text" name="id" value="{{ user._id }}" style="display: none"></td>
+                    <td><input type="text" name="name" value="{{ user.name }}"></td>
+                    <td><input type="text" name="new_password"></td>
+                    <td>
+                        <a href="#" onclick="document.getElementById('form-{{ user._id }}').submit()">Сохранить</a>
+                        <a href="/admin/delete?id={{ user._id }}">Удалить</a>
+                    </td>
+                </tr>
+            </form>
+        {% endfor %}
+
+        <tr>
+            <td colspan="4"><a href="/admin/new">Новый пользователь</a></td>
+        </tr>
+    </table>
+{% endblock %}

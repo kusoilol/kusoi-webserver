@@ -1,0 +1,17 @@
+{% extends "layout.njk" %}
+
+{% block title %}KUSOI - Администрация{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+    <form action="/admin/auth" method="POST">
+        <div>
+            <label for="admin-password">Пароль:</label>
+            <input type="text" id="admin-password" name="admin-password">
+        </div>
+        <div>
+            <input type="submit" value="Отправить">
+        </div>
+    </form>
+{% endblock %}
