@@ -43,9 +43,9 @@ router.get('/logout', async function(req, res) {
     res.redirect('/login');
 });
 
-router.get('/submissions', authorize, async function(req, res) {
-    const submissions = [{ id: 1, code: "print('Hello World...')" }, { id: 2, code: "print('Hello World!')" }]; // Посылки нужно получать с другого сервера
-    res.status(200).render('submissions', { user: req.user, submissions: submissions.toSorted((a, b) => b.id - a.id) });
+router.get('/solutions', authorize, async function(req, res) {
+    const solutions = [{ id: 1, code: "print('Hello World...')" }, { id: 2, code: "print('Hello World!')" }]; // Решения нужно получать с другого сервера
+    res.status(200).render('solutions', { user: req.user, solutions: solutions.toSorted((a, b) => b.id - a.id) });
 });
 
 router.post('/submit', authorize, async function(req, res) {
@@ -56,7 +56,7 @@ router.post('/submit', authorize, async function(req, res) {
     });
     bb.on('finish', function() {
         console.log('-----')
-        res.redirect('/submissions');
+        res.redirect('/solutions');
     });
     return req.pipe(bb);
 });
