@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="RU">
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" href="/style.css">
-        {% block header %}{% endblock %}
-    </head>
-    <body>
-        <div class="header-wrapper">
-            <div class="header-filler"></div>
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block header %}{% endblock %}
+</head>
+
+<body>
+    <div class="header-wrapper">
+        <div class="logo">KUSOI</div>
+        <div class="nav">
             <a href="/">Главная</a>
             <a href="/leaderboard">Положение</a>
             {% if user %}
                 <a href="/solutions">Решения</a>
+                <a href="/tournament">Турнир</a>
+                <a href="/customtest">Запуск</a>
                 <a href="/user">{{ user.name }}</a>
                 <a href="/logout">Выход</a>
             {% else %}
                 <a href="/login">Вход</a>
             {% endif %}
         </div>
-        <div class="content-wrapper">
-            {% block content %}{% endblock %}
-        </div>
-    </body>
+    </div>
+    <div class="content-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+</body>
 </html>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
 body {
     margin: 0;
 }
@@ -27,6 +29,42 @@ a:hover {
 
 .header-wrapper > a {
     margin-right: 1em;
+}
+
+
+body {
+    margin: 0;
+    font-family: "JetBrains Mono", monospace;
+}
+
+.header-wrapper {
+    background-color: #DA4B78;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-size: 36px;
+    color: white;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.nav a:hover {
+    text-decoration: underline;
 }
 
 .content-wrapper {
