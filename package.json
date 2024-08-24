@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file .env index.js",
-    "amvera": "node --env-file .env index.js"
+    "amvera": "node index.js"
   },
   "author": "",
   "license": "ISC",
