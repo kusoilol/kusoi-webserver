@@ -33,7 +33,6 @@ a:hover {
     margin-right: 1em;
 }
 
-
 body {
     margin: 0;
     font-family: "JetBrains Mono", monospace;
@@ -69,7 +68,7 @@ body {
     text-decoration: underline;
 }
 
-.content-wrapper{
+.content-wrapper {
     margin: 5em;
     padding: 1em;
     display: flex;
@@ -81,6 +80,25 @@ body {
 .content-wrapper .canvas-wrapper {
     display: flex;
     justify-content: center;
+}
+
+.content-wrapper .canvas-wrapper #canvas {
+    min-width: 400px;
+    min-height: 400px;
+}
+
+.content-wrapper .precanvas-wrapper {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.content-wrapper .submission-form {
+    text-align: center;
+}
+
+.content-wrapper .submission-form .choose-file {
+    display: inline-block;
 }
 
 .content-wrapper table {
