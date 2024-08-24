@@ -9,6 +9,6 @@ build:
   artifacts:
     '*': /
 run:
-  command: npm start
+  command: npm run start
   persistenceMount: /databases
   containerPort: 80
