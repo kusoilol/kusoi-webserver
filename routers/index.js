@@ -1,20 +1,16 @@
-const SECRET = process.env.SECRET || 'development';
-const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3000';
+const SECRET = process.env.SECRET;
+const SERVER_URL = process.env.SERVER_URL;
 
 const express = require('express');
 const createError = require('http-errors');
 const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
-const router = express.Router();
-
+const authorize = require("../authorize");
 const { Users } = require('../db')
 const busboy = require("busboy");
 const axios = require("axios");
 
-function authorize(req, res, next) {
-    if (!req.user) return next(createError(401));
-    next();
-}
+const router = express.Router();
 
 router.get('/', async function(req, res) {
     res.status(200).render('index', { user: req.user });
@@ -53,11 +49,6 @@ router.get('/logout', async function(req, res) {
     res.redirect('/login');
 });
 
-router.get('/solutions', authorize, async function(req, res) {
-    const solutions = [{ id: 1, code: "print('Hello World...')" }, { id: 2, code: "print('Hello World!')" }]; // Решения нужно получать с другого сервера
-    res.status(200).render('solutions', { user: req.user, solutions: solutions.toSorted((a, b) => b.id - a.id) });
-});
-
 router.post('/submit', authorize, async function(req, res) {
     const bb = busboy({ headers: req.headers });
     bb.on('file', function (fieldname, file, filename) {
@@ -86,26 +77,6 @@ router.get('/gameview/:gameId', authorize, async function(req, res) {
     res.status(200).render('gameview', { user: req.user, gameLog: response.data });
 });
 
-router.get('/solution', authorize, async function(req, res) {
-    let response;
-    try {
-        response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id);
-    } catch (e) {
-        response = { data: "No connection to backend." }
-    }
 
-    res.status(200).render('solution', { user: req.user, code: response.data });
-});
-
-router.get('/solution/:solutionId', authorize, async function(req, res) {
-    const { solutionId } = req.params;
-    let response;
-    try {
-        response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id + '&solutionId=' + solutionId);
-    } catch (e) {
-        response = { data: "No connection to backend." }
-    }
-    res.status(200).render('solution', { user: req.user, code: response.data });
-});
 
 module.exports = router;

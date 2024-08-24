@@ -5,8 +5,8 @@ const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const {Users} = require("../db");
 
-const SECRET = process.env.SECRET || 'development';
-const ADMIN_PASSWORD = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'admin', 10);
+const SECRET = process.env.SECRET;
+const ADMIN_PASSWORD = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
 
 const authorizeAdmin = function(req, res, next) {
     if (!req.isAdmin) return res.status(401).redirect('/admin/auth')

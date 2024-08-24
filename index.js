@@ -1,9 +1,16 @@
-const SERVER_PORT = Number(process.env.SERVER_PORT) || 8080;
-const SERVER_HOST = process.env.HOST || '0.0.0.0';
-const SECRET = process.env.SECRET || 'development';
+if (process.env.SERVER_PORT === undefined) process.env.SERVER_PORT = "8080";
+if (process.env.SERVER_HOST === undefined) process.env.SERVER_HOST = "0.0.0.0";
+if (process.env.SECRET === undefined) process.env.SECRET = "development";
+if (process.env.BACKEND_URL === undefined) process.env.SERVER_URL = "http://localhost:3000";
+if (process.env.ADMIN_PASSWORD === undefined) process.env.ADMIN_PASSWORD = "admin";
+
+const SERVER_PORT = Number(process.env.SERVER_PORT);
+const SERVER_HOST = process.env.SERVER_HOST;
+const SECRET = process.env.SECRET;
 
 const index_router = require('./routers/index');
 const admin_router = require('./routers/admin');
+const solution_router = require('./routers/solution');
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const nunjucks = require('nunjucks');
@@ -76,6 +83,7 @@ app.set('view engine', 'njk');
 
 app.use('/', index_router);
 app.use('/admin/', admin_router);
+app.use('/solutions/', solution_router);
 
 // Error handling
 
