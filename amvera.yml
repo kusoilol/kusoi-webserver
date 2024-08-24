@@ -9,7 +9,6 @@ build:
   artifacts:
     '*': /
 run:
-  scriptName: index.js
-  command: npm run start
+  command: npm start
   persistenceMount: /databases
   containerPort: 80
