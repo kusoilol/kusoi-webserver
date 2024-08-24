@@ -9,163 +9,164 @@
 </div>
 
 <script type="text/javascript">
-    const gameLog = `{{ gameLog }}`.split('\n')
-// const gameLog =
-// `setup 7
-// .......
-// .#.#.#.
-// .......
-// .#####.
-// .......
-// .#.#.#.
-// .......
-// data 3
-// 6 0 down
-// 0 6 up
-// 0
-// data 3
-// 0 6 up
-// 6 0 left
-// 0
-// data 4
-// 6 0 left
-// 0 6 up
-// 1
-// 0 5 up
-// data 4
-// 0 6 up
-// 5 0 left
-// 1
-// 0 5 up
-// data 4
-// 5 0 left
-// 0 5 up
-// 1
-// 0 4 up
-// data 4
-// 0 5 up
-// 4 0 left
-// 1
-// 0 4 up
-// data 4
-// 4 0 left
-// 0 4 up
-// 1
-// 0 3 up
-// data 4
-// 0 4 up
-// 3 0 left
-// 1
-// 0 3 up
-// data 4
-// 3 0 left
-// 0 3 up
-// 1
-// 0 2 up
-// data 4
-// 0 3 up
-// 2 0 left
-// 1
-// 0 2 up
-// data 4
-// 2 0 left
-// 0 2 up
-// 1
-// 0 1 up
-// data 4
-// 0 2 up
-// 1 0 left
-// 1
-// 0 1 up
-// data 4
-// 1 0 left
-// 0 1 up
-// 1
-// 0 0 up
-// data 4
-// 0 1 up
-// 0 0 left
-// 1
-// 0 0 up
-// data 3
-// 0 0 left
-// 0 2 up
-// 0
-// data 4
-// 0 2 up
-// 0 0 left
-// 1
-// 0 0 left
-// data 3
-// 0 0 left
-// 0 3 up
-// 0
-// data 3
-// 0 3 up
-// 0 0 left
-// 0
-// data 3
-// 0 0 left
-// 0 2 up
-// 0
-// data 4
-// 0 2 up
-// 0 0 left
-// 1
-// 0 0 left
-// data 3
-// 0 0 left
-// 0 3 up
-// 0
-// data 3
-// 0 3 up
-// 0 0 down
-// 0
-// data 3
-// 0 0 down
-// 0 3 left
-// 0
-// data 3
-// 0 3 left
-// 0 0 right
-// 0
-// data 3
-// 0 0 right
-// 0 3 down
-// 0
-// data 3
-// 0 3 down
-// 0 0 up
-// 0
-// data 3
-// 0 0 up
-// 0 3 right
-// 0
-// data 3
-// 0 3 right
-// 0 0 left
-// 0
-// data 3
-// 0 0 left
-// 0 3 up
-// 0
-// data 3
-// 0 3 up
-// 0 0 down
-// 0
-// data 4
-// 0 0 down
-// 0 3 up
-// 1
-// 0 2 up
-// data 4
-// 0 3 up
-// 0 1 down
-// 1
-// 0 2 up
-// win 2
-// `.split('\n')
+    // const gameLog = `{{ gameLog }}`.split('\n')
+const gameLog =
+`setup 7
+.......
+.#.#.#.
+.......
+.#####.
+.......
+.#.#.#.
+.......
+data 3
+6 0 down
+0 6 up
+0
+data 3
+0 6 up
+6 0 left
+0
+data 4
+6 0 left
+0 6 up
+1
+0 5 up
+data 4
+0 6 up
+5 0 left
+1
+0 5 up
+data 4
+5 0 left
+0 5 up
+1
+0 4 up
+data 4
+0 5 up
+4 0 left
+1
+0 4 up
+data 4
+4 0 left
+0 4 up
+1
+0 3 up
+data 4
+0 4 up
+3 0 left
+1
+0 3 up
+data 4
+3 0 left
+0 3 up
+1
+0 2 up
+data 4
+0 3 up
+2 0 left
+1
+0 2 up
+data 4
+2 0 left
+0 2 up
+1
+0 1 up
+data 4
+0 2 up
+1 0 left
+1
+0 1 up
+data 4
+1 0 left
+0 1 up
+1
+0 0 up
+data 4
+0 1 up
+0 0 left
+1
+0 0 up
+data 3
+0 0 left
+0 2 up
+0
+data 4
+0 2 up
+0 0 left
+1
+0 0 left
+data 3
+0 0 left
+0 3 up
+0
+data 3
+0 3 up
+0 0 left
+0
+data 3
+0 0 left
+0 2 up
+0
+data 4
+0 2 up
+0 0 left
+1
+0 0 left
+data 3
+0 0 left
+0 3 up
+0
+data 3
+0 3 up
+0 0 down
+0
+data 3
+0 0 down
+0 3 left
+0
+data 3
+0 3 left
+0 0 right
+0
+data 3
+0 0 right
+0 3 down
+0
+data 3
+0 3 down
+0 0 up
+0
+data 3
+0 0 up
+0 3 right
+0
+data 3
+0 3 right
+0 0 left
+0
+data 3
+0 0 left
+0 3 up
+0
+data 3
+0 3 up
+0 0 down
+0
+data 4
+0 0 down
+0 3 up
+1
+0 2 up
+data 4
+0 3 up
+0 1 down
+1
+0 2 up
+win 2
+`.split('\n')
 
+    __readLineIndexer = 0
     function readLine() {
         if (__readLineIndexer < gameLog.length) {
             return gameLog[__readLineIndexer++]
@@ -173,16 +174,56 @@
         return ""
     }
 
-    __readLineIndexer = 0
+    function parseLogs(logs) {
+        __readLineIndexer = 0;
+        var res = []
+        var fld = []
+
+        fldHeight = readLine().split(" ")[1]
+        for (i = 0; i < fldHeight; i++) {
+            fld.push(readLine())
+        }
+
+        for (turn = 0; ; turn++) {
+            line = readLine()
+            cmd = line.split(" ")
+
+            if (cmd[0] == "win") {
+                res.push({
+                    type: "win",
+                    who: cmd[1],
+                })
+            } else if (cmd[0] == "data") {
+                p1 = getRCD(readLine())
+                p2 = getRCD(readLine())
+
+                if (turn % 2 == 1) {
+                    p1, p2 = p2, p1
+                }
+    
+                bulletsNum = Number(readLine())
+                bullets = []
+    
+                for (i = 0; i < bulletsNum; i++) {
+                    bullets.push(getRCD(readLine()))
+                }
+
+                res.push({
+                    p: [p1, p2],
+                    bullets: bullets,
+                })
+            }
+        }
+
+        return fld, res
+    }
+
     var cnv = document.getElementById("canvas")
     var ctx = cnv.getContext("2d")
 
-    const cellsVer = Number(readLine().split(' ')[1])
-    const field = []
+    var [field, moves] = parseLogs(gameLog)
 
-    for (i = 0; i < cellsVer; i++) {
-        field.push(readLine())
-    }
+    const cellsVer = file.length
     const cellsHor = field[0].length
 
     cnv.width = 400
@@ -192,9 +233,32 @@
     cnv.height += cellsVer - (cnv.height % cellsVer)
     const cellSize = Math.floor(Math.min(cnv.width / cellsHor, cnv.height / cellsVer))
 
+    images = {
+        tank: [{
+            "up": new Image(),
+            "down": new Image(),
+            "left": new Image(),
+            "right": new Image(),
+        }, {
+            "up": new Image(),
+            "down": new Image(),
+            "left": new Image(),
+            "right": new Image(),
+        }],
+    }
+
+    // images.tank[0]["up"].src = "src/sprites/tank_power_up_c0_t1.png"
+    // images.tank[0]["down"].src = "src/sprites/tank_power_down_c0_t1.png"
+    // images.tank[0]["left"].src = "src/sprites/tank_power_left_c0_t1.png"
+    // images.tank[0]["right"].src = "src/sprites/tank_power_right_c0_t1.png"
+    // images.tank[1]["up"].src = "src/sprites/tank_power_up_c0_t1_f.png"
+    // images.tank[1]["down"].src = "src/sprites/tank_power_down_c0_t1_f.png"
+    // images.tank[1]["left"].src = "src/sprites/tank_power_left_c0_t1_f.png"
+    // images.tank[1]["right"].src = "src/sprites/tank_power_right_c0_t1_f.png"
+
+    // init
     ctx.fillStyle = "black"
     ctx.fillRect(0, 0, cnv.width, cnv.height)
-
     document.getElementById("status").innerText = ""
 
     function getCoords(r, c) {
@@ -213,41 +277,37 @@
         ctx.fillRect(x, y, cellSize, cellSize)
     }
 
-    function drawTank(r, c, d, p) {
-        [x, y] = getCoords(r, c)
-
-        if (p == 1) {
-            ctx.fillStyle = "green"
-        } else {
-            ctx.fillStyle = "red"
-        }
+    function drawTank(obj, p) {
+        [x, y] = getCoords(obj.r, obj.c)
+        p -= 1
 
         console.log("draw tank", r, c, d, p)
+        ctx.drawImage(images.tank[p][obj.d], x, y, cellSize, cellSize)
 
-        ctx.fillRect(x + cellSize * 0.2, y + cellSize * 0.2, cellSize * 0.6, cellSize * 0.6)
+        // ctx.fillRect(x + cellSize * 0.2, y + cellSize * 0.2, cellSize * 0.6, cellSize * 0.6)
 
-        switch (d) {
+        switch (obj.d) {
             case "up": {
-                ctx.fillRect(x + cellSize * 0.4, y, cellSize * 0.2, cellSize * 0.2);
+                // ctx.fillRect(x + cellSize * 0.4, y, cellSize * 0.2, cellSize * 0.2);
                 break;
             }
             case "right": {
-                ctx.fillRect(x + cellSize * 0.8, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
+                // ctx.fillRect(x + cellSize * 0.8, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
                 break;
             }
             case "down": {
-                ctx.fillRect(x + cellSize * 0.4, y + cellSize * 0.8, cellSize * 0.2, cellSize * 0.2);
+                // ctx.fillRect(x + cellSize * 0.4, y + cellSize * 0.8, cellSize * 0.2, cellSize * 0.2);
                 break;
             }
             case "left": {
-                ctx.fillRect(x, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
+                // ctx.fillRect(x, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
                 break;
             }
         }
     }
 
-    function drawBullet(r, c, d) {
-        [x, y] = getCoords(r, c)
+    function drawBullet(obj) {
+        [x, y] = getCoords(obj.r, obj.c)
 
         ctx.fillStyle = "#fff"
         ctx.fillRect(x + cellSize * 0.4, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2)
@@ -273,10 +333,13 @@
     }
 
     function getRCD(line) {
-        ans = line.split(" ")
-        ans[0] = Number(ans[0])
-        ans[1] = Number(ans[1])
-        return ans
+        data = line.split(" ")
+        res = {
+            r: Number(data[0]),
+            c: Number(data[1]),
+            d: data[2],
+        }
+        return res
     }
 
     async function sleep(ms) {
