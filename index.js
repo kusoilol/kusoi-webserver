@@ -11,6 +11,7 @@ const SECRET = process.env.SECRET;
 const index_router = require('./routers/index');
 const admin_router = require('./routers/admin');
 const solution_router = require('./routers/solution');
+const games_router = require('./routers/games');
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const nunjucks = require('nunjucks');
@@ -88,6 +89,7 @@ app.set('view engine', 'njk');
 app.use('/', index_router);
 app.use('/admin/', admin_router);
 app.use('/solutions/', solution_router);
+app.use('/games/', games_router);
 
 // Error handling
 

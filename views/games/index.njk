@@ -1,0 +1,20 @@
+{% extends "../layout.njk" %}
+
+{% block title %}KUSOI - Игры{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<table>
+    <tr>
+        <th>Время</th>
+        <th>Просмотр</th>
+    </tr>
+    {% for game in games %}
+        <tr>
+            <td>{{ game.timestamp }}</td>
+            <td><a href="/games/{{ game.id }}">Смотреть</a></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}
