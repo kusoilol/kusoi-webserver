@@ -1,7 +1,7 @@
 if (process.env.SERVER_PORT === undefined) process.env.SERVER_PORT = "8080";
 if (process.env.SERVER_HOST === undefined) process.env.SERVER_HOST = "0.0.0.0";
 if (process.env.SECRET === undefined) process.env.SECRET = "development";
-if (process.env.BACKEND_URL === undefined) process.env.SERVER_URL = "http://localhost:3000";
+if (process.env.BACKEND_URL === undefined) process.env.BACKEND_URL = "http://localhost:3000";
 if (process.env.ADMIN_PASSWORD === undefined) process.env.ADMIN_PASSWORD = "admin";
 
 const SERVER_PORT = Number(process.env.SERVER_PORT);
@@ -21,6 +21,8 @@ const logger = require('morgan');
 const createError = require('http-errors');
 const path = require("path");
 const {Users} = require("./db");
+const fileUpload = require('express-fileupload')
+
 
 // App setup
 
@@ -31,6 +33,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(fileUpload())
 
 // JWT setup
 
@@ -56,6 +59,7 @@ passport.use('adminJWT', new JwtStrategy(AdminJwtStrategyOptions, function(jwt_p
 const authorize = function(req, res, next) {
     passport.authenticate('userJWT', (err, user) => {
         req.user = user || null;
+        if (req.user) req.user.id = user._id;
         next();
     })(req, res, next);
 };

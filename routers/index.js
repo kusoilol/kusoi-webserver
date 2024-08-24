@@ -1,5 +1,4 @@
 const SECRET = process.env.SECRET;
-const SERVER_URL = process.env.SERVER_URL;
 
 const express = require('express');
 const createError = require('http-errors');
@@ -7,8 +6,6 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const authorize = require("../authorize");
 const { Users } = require('../db')
-const busboy = require("busboy");
-const axios = require("axios");
 
 const router = express.Router();
 
@@ -49,34 +46,8 @@ router.get('/logout', async function(req, res) {
     res.redirect('/login');
 });
 
-router.post('/submit', authorize, async function(req, res) {
-    const bb = busboy({ headers: req.headers });
-    bb.on('file', function (fieldname, file, filename) {
-        console.log(req.user.name);
-        file.pipe(process.stdout);
-    });
-    bb.on('finish', function() {
-        console.log('-----')
-        res.redirect('/solutions');
-    });
-    return req.pipe(bb);
-});
-
 router.get('/user', authorize, async function(req, res) {
     res.status(200).render('user', { user: req.user });
 });
-
-router.get('/gameview/:gameId', authorize, async function(req, res) {
-    const { gameId } = req.params;
-    let response;
-    try {
-        response = await axios.get(SERVER_URL + '/gamelog?gameId=' + gameId);
-    } catch (e) {
-        response = { data: "No connection to backend." }
-    }
-    res.status(200).render('gameview', { user: req.user, gameLog: response.data });
-});
-
-
 
 module.exports = router;
