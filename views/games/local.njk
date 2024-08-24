@@ -1,4 +1,4 @@
-{% extends "layout.njk" %}
+{% extends "../layout.njk" %}
 
 {% block title %}KUSOI - Запуск{% endblock %}
 
@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<form action="/submit" method="POST" enctype="multipart/form-data" class="submission-form">
+<form action="/games/local" method="POST" enctype="multipart/form-data" class="submission-form">
     <div class="choose-file">
         <label for="new-solution">Отправить код:</label>
         <input type="file" id="new-solution" name="new-solution">

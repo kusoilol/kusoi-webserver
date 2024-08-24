@@ -1,9 +1,17 @@
-const SERVER_PORT = Number(process.env.SERVER_PORT) || 8080;
-const SERVER_HOST = process.env.HOST || '0.0.0.0';
-const SECRET = process.env.SECRET || 'development';
+if (process.env.SERVER_PORT === undefined) process.env.SERVER_PORT = "8080";
+if (process.env.SERVER_HOST === undefined) process.env.SERVER_HOST = "0.0.0.0";
+if (process.env.SECRET === undefined) process.env.SECRET = "development";
+if (process.env.BACKEND_URL === undefined) process.env.BACKEND_URL = "http://localhost:3000";
+if (process.env.ADMIN_PASSWORD === undefined) process.env.ADMIN_PASSWORD = "admin";
+
+const SERVER_PORT = Number(process.env.SERVER_PORT);
+const SERVER_HOST = process.env.SERVER_HOST;
+const SECRET = process.env.SECRET;
 
 const index_router = require('./routers/index');
 const admin_router = require('./routers/admin');
+const solution_router = require('./routers/solution');
+const games_router = require('./routers/games');
 const express = require('express');
 const cookieParser = require('cookie-parser')
 const nunjucks = require('nunjucks');
@@ -14,6 +22,8 @@ const logger = require('morgan');
 const createError = require('http-errors');
 const path = require("path");
 const {Users} = require("./db");
+const fileUpload = require('express-fileupload')
+
 
 // App setup
 
@@ -24,6 +34,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(fileUpload())
 
 // JWT setup
 
@@ -49,6 +60,7 @@ passport.use('adminJWT', new JwtStrategy(AdminJwtStrategyOptions, function(jwt_p
 const authorize = function(req, res, next) {
     passport.authenticate('userJWT', (err, user) => {
         req.user = user || null;
+        if (req.user) req.user.id = user._id;
         next();
     })(req, res, next);
 };
@@ -76,6 +88,8 @@ app.set('view engine', 'njk');
 
 app.use('/', index_router);
 app.use('/admin/', admin_router);
+app.use('/solutions/', solution_router);
+app.use('/games/', games_router);
 
 // Error handling
 

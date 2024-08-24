@@ -4,9 +4,11 @@ const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const uuid = require("uuid");
 const {Users} = require("../db");
+const axios = require("axios");
 
-const SECRET = process.env.SECRET || 'development';
-const ADMIN_PASSWORD = bcrypt.hashSync(process.env.ADMIN_PASSWORD || 'admin', 10);
+const SECRET = process.env.SECRET;
+const BACKEND_URL = process.env.BACKEND_URL;
+const ADMIN_PASSWORD = bcrypt.hashSync(process.env.ADMIN_PASSWORD, 10);
 
 const authorizeAdmin = function(req, res, next) {
     if (!req.isAdmin) return res.status(401).redirect('/admin/auth')
@@ -42,6 +44,15 @@ router.get('/delete', authorizeAdmin, function(req, res) {
 router.get('/new', authorizeAdmin, function(req, res) {
     const _id = uuid.v4();
     Users.create({ _id, name: _id, passwordHash: bcrypt.hashSync("12345", 10)}).save();
+    res.redirect('/admin');
+});
+
+router.get('/tournament', authorizeAdmin, async function(req, res) {
+    try {
+        await axios.post(BACKEND_URL + '/tournament/', [
+            ...Users.find().map(user => user._id),
+        ]);
+    } catch (e) {}
     res.redirect('/admin');
 });
 

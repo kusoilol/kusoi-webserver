@@ -5,10 +5,14 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    <form action="/submit" method="POST" enctype="multipart/form-data" class="submission-form">
+    <form action="/solutions/submit" method="POST" enctype="multipart/form-data" class="submission-form">
         <div>
             <label for="new-solution">Отправить код:</label>
             <input type="file" id="new-solution" name="new-solution">
+            <select id="lang" name="lang">
+                <option value=".py" selected>.py</option>
+                <!--<option value=".gcc.cpp">.cpp</option>-->
+            </select>
         </div>
         <div>
             <input type="submit" value="Отправить">
@@ -22,7 +26,7 @@
         {% for solution in solutions %}
             <tr>
                 <td>{{ solution.id }}</td>
-                <td><a href="/solution/{{ solution.id }}">Ссылка</a></td>
+                <td><a href="/solutions/{{ solution.id }}">Ссылка</a></td>
             </tr>
         {% endfor %}
     </table>
