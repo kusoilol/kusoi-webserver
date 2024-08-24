@@ -21,7 +21,7 @@ router.get('/leaderboard', async function(req, res) {
 });
 
 router.get('/tournament', async function(req, res) {
-    res.status(200).render('tournament', { user: req.user });
+    res.status(200).render('tournament', { user: req.user, users: Users.find() });
 });
 
 router.get('/customtest', async function(req, res) {
