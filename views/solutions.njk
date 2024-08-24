@@ -22,7 +22,7 @@
         {% for solution in solutions %}
             <tr>
                 <td>{{ solution.id }}</td>
-                <td>{{ solution.code }}</td>
+                <td><a href="/solution/{{ solution.id }}">Ссылка</a></td>
             </tr>
         {% endfor %}
     </table>
