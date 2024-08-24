@@ -2,6 +2,8 @@
 
 body {
     margin: 0;
+    background-image: url("/src/kusoi_background.png");
+    background-size: cover;
 }
 
 a {
@@ -27,7 +29,7 @@ a:hover {
     flex-grow: 2;
 }
 
-.header-wrapper > a {
+.header-wrapper>a {
     margin-right: 1em;
 }
 
@@ -67,11 +69,18 @@ body {
     text-decoration: underline;
 }
 
-.content-wrapper {
+.content-wrapper{
+    margin: 5em;
     padding: 1em;
     display: flex;
     flex-direction: column;
     gap: 1em;
+    background-color: #ffffffe3;
+}
+
+.content-wrapper .canvas-wrapper {
+    display: flex;
+    justify-content: center;
 }
 
 .content-wrapper table {
@@ -79,6 +88,7 @@ body {
     border-collapse: collapse;
 }
 
-.content-wrapper table th, .content-wrapper table td {
+.content-wrapper table th,
+.content-wrapper table td {
     border: 1px solid #a9a9a9;
 }

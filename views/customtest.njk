@@ -5,5 +5,170 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    запуск
+
+<button type="button" id="start-button">Запуск!</button>
+<div class="canvas-wrapper">
+    <canvas id="canvas"></canvas>
+</div>
+<script type="text/javascript">
+    const gameLog = `{{ put code here }}`.split('\n')
+
+    function readLine() {
+        if (__readLineIndexer < gameLog.length) {
+            return gameLog[__readLineIndexer++]
+        }
+        return ""
+    }
+
+
+    __readLineIndexer = 0
+    var cnv = document.getElementById("canvas")
+    var ctx = cnv.getContext("2d")
+
+    const cellsVer = Number(readLine().split(' ')[1])
+    const field = []
+
+    for (i = 0; i < cellsVer; i++) {
+        field.push(readLine())
+    }
+    const cellsHor = field[0].length
+
+    cnv.width = 600 + cellsHor - (600 % cellsHor)
+    cnv.height = 600 + cellsVer - (600 % cellsVer)
+    const cellSize = Math.floor(Math.min(cnv.width / cellsHor, cnv.height / cellsVer))
+
+    ctx.fillStyle = "black"
+    ctx.fillRect(0, 0, cnv.width, cnv.height)
+
+
+    function getCoords(r, c) {
+        return [r * cellSize, c * cellSize]
+    }
+
+    function drawWall(r, c) {
+        [x, y] = getCoords(r, c)
+        ctx.fillStyle = "brown"
+        ctx.fillRect(x, y, cellSize, cellSize)
+    }
+
+    function drawNothing(r, c) {
+        [x, y] = getCoords(r, c)
+        ctx.fillStyle = "black"
+        ctx.fillRect(x, y, cellSize, cellSize)
+    }
+
+    function drawTank(r, c, d, p) {
+        [x, y] = getCoords(r, c)
+
+        if (p == 1) {
+            ctx.fillStyle = "green"
+        } else {
+            ctx.fillStyle = "red"
+        }
+
+        console.log("draw tank", r, c, d, p)
+
+        ctx.fillRect(x + cellSize * 0.2, y + cellSize * 0.2, cellSize * 0.6, cellSize * 0.6)
+
+        switch (d) {
+            case "up": {
+                ctx.fillRect(x + cellSize * 0.4, y, cellSize * 0.2, cellSize * 0.2);
+                break;
+            }
+            case "right": {
+                ctx.fillRect(x + cellSize * 0.8, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
+                break;
+            }
+            case "down": {
+                ctx.fillRect(x + cellSize * 0.4, y + cellSize * 0.8, cellSize * 0.2, cellSize * 0.2);
+                break;
+            }
+            case "left": {
+                ctx.fillRect(x, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2);
+                break;
+            }
+        }
+    }
+
+    function drawBullet(r, c, d) {
+        [x, y] = getCoords(r, c)
+
+        ctx.fillStyle = "#fff"
+        ctx.fillRect(x + cellSize * 0.4, y + cellSize * 0.4, cellSize * 0.2, cellSize * 0.2)
+    }
+
+
+    function drawField() {
+        for (i = 0; i < cellsVer; i++) {
+            for (j = 0; j < cellsHor; j++) {
+                switch (field[i][j]) {
+                    case '#': {
+                        drawWall(i, j)
+                        break
+                    }
+                    case '.': {
+                        drawNothing(i, j)
+                        break
+                    }
+                }
+            }
+        }
+        console.log("field")
+    }
+
+    function getRCD(line) {
+        ans = line.split(" ")
+        ans[0] = Number(ans[0])
+        ans[1] = Number(ans[1])
+        return ans
+    }
+
+    async function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms))
+    }
+
+
+    async function iHateJS() {
+        __readLineIndexer = 0
+        for (turn = 0; ; turn++) {
+            line = readLine()
+            if (line.split(" ")[0] == "win") {
+                ctx.text
+                break
+            }
+
+            p1 = getRCD(readLine())
+            p2 = getRCD(readLine())
+
+            bulletsNum = Number(readLine())
+            bullets = []
+
+            for (i = 0; i < bulletsNum; i++) {
+                bullets.push(getRCD(readLine()))
+            }
+
+            if (turn % 2 == 0) {
+                continue
+            }
+
+            console.log("player1", p1)
+            console.log("player2", p2)
+            console.log("bullets", bullets)
+
+            drawField()
+            drawTank(p1[0], p1[1], p1[2], 1)
+            drawTank(p2[0], p2[1], p2[2], 2)
+
+            for (i = 0; i < bullets.length; i++) {
+                drawBullet(bullets[i][0], bullets[i][1], bullets[i][2])
+            }
+
+            await sleep(500);
+        }
+    }
+
+    var startButton = document.getElementById("start-button")
+    startButton.addEventListener("click", iHateJS);
+</script>
+
 {% endblock %}
