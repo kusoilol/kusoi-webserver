@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const JWT = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const uuid = require("uuid");
 const {Users} = require("../db");
 
 const SECRET = process.env.SECRET || 'development';
@@ -28,19 +29,19 @@ router.get('/', authorizeAdmin, function(req, res) {
 
 router.post('/edit', authorizeAdmin, function(req, res) {
     const { id, name, new_password } = req.body;
-    Users.update({ _id: Number(id) }, { name }).save();
-    if (new_password) Users.update({ _id: Number(id) }, { passwordHash: bcrypt.hashSync(new_password, 10) }).save();
+    Users.update({ _id: id }, { name }).save();
+    if (new_password) Users.update({ _id: id }, { passwordHash: bcrypt.hashSync(new_password, 10) }).save();
     res.redirect('/admin');
 });
 
 router.get('/delete', authorizeAdmin, function(req, res) {
-    Users.remove({ _id: Number(req.query.id) });
+    Users.remove({ _id: req.query.id });
     res.redirect('/admin');
 });
 
 router.get('/new', authorizeAdmin, function(req, res) {
-    const _id = Math.max(0, ...(Users.find().map((e) => e._id))) + 1;
-    Users.create({ _id, name: 'user' + _id, passwordHash: bcrypt.hashSync("12345", 10)}).save();
+    const _id = uuid.v4();
+    Users.create({ _id, name: _id, passwordHash: bcrypt.hashSync("12345", 10)}).save();
     res.redirect('/admin');
 });
 

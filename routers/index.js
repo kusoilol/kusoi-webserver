@@ -37,7 +37,7 @@ router.get('/login', async function(req, res) {
 });
 
 router.post('/login', async function(req, res, next) {
-    const user_id = Number(req.body.user_id);
+    const user_id = req.body.user_id;
     const user = Users.findOne({ _id: user_id });
 
     if (user === undefined || !bcrypt.compareSync(req.body.password, user.passwordHash))
@@ -82,7 +82,6 @@ router.get('/gameview/:gameId', authorize, async function(req, res) {
 });
 
 router.get('/solution', authorize, async function(req, res) {
-    const { solutionId } = req.params;
     const response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id);
     res.status(200).render('solution', { user: req.user, code: response.data });
 });

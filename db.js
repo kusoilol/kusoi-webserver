@@ -7,7 +7,7 @@ if (Users === undefined) {
     const { Schema } = new dbLocal({ path: "./databases" });
 
     Users = Schema("Users", {
-        _id: { type: Number, required: true },
+        _id: { type: String, required: true },
         name: { type: String, required: true },
         passwordHash: { type: String, required: true },
         score: { type: Number, required: true, default: 0 },
