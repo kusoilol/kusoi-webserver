@@ -7,46 +7,74 @@ function readLine(logs) {
     return ""
 }
 
+function readMove(logs) {
+    p1 = getRCD(readLine(logs))
+    p2 = getRCD(readLine(logs))
+
+    bulletsNum = Number(readLine(logs))
+    bullets = []
+
+    for (i = 0; i < bulletsNum; i++) {
+        bullets.push(getRCD(readLine(logs)))
+    }
+
+    return {
+        type: "move",
+        p: [p2, p1],
+        bullets: bullets,
+    }
+}
+
+function readSetup(logs) {
+    fld = []
+    fldHeight = Number(readLine(logs).split(" ")[0])
+    for (i = 0; i < fldHeight; i++) {
+        fld.push(readLine(logs))
+    }
+    return fld
+}
+
 function parseLogs(logs) {
     __readLineIndexer = 0;
     var res = []
     var fld = []
 
-    fldHeight = Number(readLine(logs).split(" ")[1])
-    for (i = 0; i < fldHeight; i++) {
-        fld.push(readLine(logs))
-    }
+    __setupCount = 0
+    player = 1
 
-    for (turn = 0; ; turn++) {
-        line = readLine(logs)
-        cmd = line.split(" ")
+    while (true) {
+        cmd = readLine(logs).split(" ")
+        if (["fw", "bw", "rr", "rl", "sh", "ff"].includes(cmd[0])) {
+            continue
+        }
 
-        if (cmd[0] == "win") {
+        player = (player + 1) % 2
+
+        if (cmd[0] == "setup") {
+            fld = readSetup(logs)
+            tmp = readMove(logs)
+
+            if (__setupCount == 0) {
+                if (player == 0) {
+                    [tmp.p[0], tmp.p[1]] = [tmp.p[1], tmp.p[0]]
+                }
+                res.push(tmp)
+            }
+        }
+
+        else if (cmd[0] == "data") {
+            tmp = readMove(logs)
+            if (player == 1) {
+                res.push(tmp)
+            }
+        }
+
+        else if (cmd[0] == "win") {
             res.push({
                 type: "win",
-                who: cmd[1],
+                who: Number(cmd[1]),
             })
             break
-        } else if (cmd[0] == "data") {
-            p1 = getRCD(readLine(logs))
-            p2 = getRCD(readLine(logs))
-
-            bulletsNum = Number(readLine(logs))
-            bullets = []
-
-            for (i = 0; i < bulletsNum; i++) {
-                bullets.push(getRCD(readLine(logs)))
-            }
-
-            if (turn % 2 == 0) {
-                continue
-            }
-
-            res.push({
-                type: "move",
-                p: [p2, p1],
-                bullets: bullets,
-            })
         }
     }
 
@@ -199,7 +227,7 @@ async function simulate() {
             let looser = 1 - winner
             document.getElementById("status").innerText = ["Белый", "Красный"][winner] + " победил!"
             if (turn > 0) {
-                drawBoom(moves[turn-1].p[looser].r, moves[turn-1].p[looser].c)
+                drawBoom(moves[turn - 1].p[looser].r, moves[turn - 1].p[looser].c)
             }
             break
         }
