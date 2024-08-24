@@ -1,4 +1,5 @@
 const SECRET = process.env.SECRET || 'development';
+const SERVER_URL = process.env.SERVER_URL || 'http://localhost:3000';
 
 const express = require('express');
 const createError = require('http-errors');
@@ -8,6 +9,7 @@ const router = express.Router();
 
 const { Users } = require('../db')
 const busboy = require("busboy");
+const axios = require("axios");
 
 function authorize(req, res, next) {
     if (!req.user) return next(createError(401));
@@ -23,11 +25,11 @@ router.get('/leaderboard', async function(req, res) {
 });
 
 router.get('/tournament', async function(req, res) {
-    res.status(200).render('tournament', { user: req.user, users: Users.find() });
+    res.status(200).render('tournament', { user: req.user });
 });
 
 router.get('/customtest', async function(req, res) {
-    res.status(200).render('customtest', { user: req.user, users: Users.find() });
+    res.status(200).render('customtest', { user: req.user });
 });
 
 router.get('/login', async function(req, res) {
@@ -71,6 +73,12 @@ router.post('/submit', authorize, async function(req, res) {
 
 router.get('/user', authorize, async function(req, res) {
     res.status(200).render('user', { user: req.user });
+});
+
+router.get('/view/:gameId', authorize, async function(req, res) {
+    const { gameId } = req.params;
+    const response = await axios.get(SERVER_URL + '/gamelog?gameId=' + gameId);
+    res.status(200).render('user', { user: req.user, gameLog: response.data });
 });
 
 module.exports = router;
