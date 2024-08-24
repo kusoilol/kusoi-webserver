@@ -3,17 +3,25 @@ const BACKEND_URL = process.env.BACKEND_URL;
 const authorize = require("../authorize");
 const axios = require("axios");
 const express = require("express");
+const {Users} = require("../db");
 
 const router = express.Router();
 
 router.get('/', authorize, async function(req, res) {
-    let response;
+    let data;
     try {
-        response = await axios.get(BACKEND_URL + '/game/list?team_id=' + req.user.id);
+        const response = await axios.get(BACKEND_URL + '/game/list?team_id=' + req.user.id);
+        data = response.data.map(el => {
+            return {
+                opponent_name: Users.findOne({ _id: el.opponent }).name,
+                unixtime: Date.parse(el.timestamp),
+                ...el,
+            }
+        });
     } catch (e) {
-        response = { data: null };
+        data = [];
     }
-    res.status(200).render('games/index', { user: req.user, games: response.data });
+    res.status(200).render('games/index', { user: req.user, games: data.toSorted((a, b) => b.unixtime - a.unixtime) });
 });
 
 router.get('/local', authorize, async function(req, res) {

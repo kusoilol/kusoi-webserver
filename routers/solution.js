@@ -14,7 +14,7 @@ router.get('/', authorize, async function(req, res) {
             solutions.push({ id: i })
         }
     } catch (e) {
-        solutions = [{ id: 1 }];
+        solutions = [ ];
     }
     res.status(200).render('solutions', { user: req.user, solutions: solutions.toSorted((a, b) => b.id - a.id) });
 });

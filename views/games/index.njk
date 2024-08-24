@@ -8,12 +8,16 @@
 <table>
     <tr>
         <th>Время</th>
+        <th>Противник</th>
+        <th>Исход</th>
         <th>Просмотр</th>
     </tr>
     {% for game in games %}
         <tr>
             <td>{{ game.timestamp }}</td>
-            <td><a href="/games/{{ game.id }}">Смотреть</a></td>
+            <td>{{ game.opponent_name }}</td>
+            <td>{% if game.winner === user.id %}Победа{% else %}Поражение{% endif %}</td>
+            <td><a href="/games/{{ game.game_id }}">Смотреть</a></td>
         </tr>
     {% endfor %}
 </table>
