@@ -75,10 +75,22 @@ router.get('/user', authorize, async function(req, res) {
     res.status(200).render('user', { user: req.user });
 });
 
-router.get('/view/:gameId', authorize, async function(req, res) {
+router.get('/gameview/:gameId', authorize, async function(req, res) {
     const { gameId } = req.params;
     const response = await axios.get(SERVER_URL + '/gamelog?gameId=' + gameId);
-    res.status(200).render('user', { user: req.user, gameLog: response.data });
+    res.status(200).render('gameview', { user: req.user, gameLog: response.data });
+});
+
+router.get('/solution', authorize, async function(req, res) {
+    const { solutionId } = req.params;
+    const response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id);
+    res.status(200).render('solution', { user: req.user, code: response.data });
+});
+
+router.get('/solution/:solutionId', authorize, async function(req, res) {
+    const { solutionId } = req.params;
+    const response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id + '&solutionId=' + solutionId);
+    res.status(200).render('solution', { user: req.user, code: response.data });
 });
 
 module.exports = router;
