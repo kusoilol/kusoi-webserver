@@ -8,17 +8,11 @@
 
 <form action="/submit" method="POST" enctype="multipart/form-data" class="submission-form">
     <div class="choose-file">
-        <label for="new-solution">Бот 1:</label>
-        <input type="file" id="new-solution" name="new-solution">
-    </div>
-    <div class="choose-file">
-        <label for="new-solution">Бот 2:</label>
+        <label for="new-solution">Отправить код:</label>
         <input type="file" id="new-solution" name="new-solution">
     </div>
     <div>
         <input type="submit" value="Отправить">
     </div>
 </form>
-{% include "draw.njk" %}
-
 {% endblock %}
