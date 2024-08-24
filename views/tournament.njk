@@ -5,5 +5,24 @@
 {% block header %}{% endblock %}
 
 {% block content %}
-    Турнир
+    <table>
+        <tr>
+            <th></th>
+            {% for user in users %}
+                <th>{{user.name}}</th>
+            {% endfor %}
+        </tr>
+        {% for user in users %}
+            <tr>
+                <th>{{user.name}}</th>
+                {% for enemy in users %}
+                    <td>
+                        {% if user != enemy %}
+                            <a href="/gameview/{{gameId}}">{{user.name}} - {{enemy.name}}</a>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}
