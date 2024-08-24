@@ -1,0 +1,13 @@
+---
+meta:
+  environment: node
+  toolchain:
+    name: npm
+    version: 20
+build:
+  artifacts:
+    '*': /
+run:
+  command: npm run start
+  persistenceMount: /databases
+  containerPort: 80
