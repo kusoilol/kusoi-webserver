@@ -77,18 +77,34 @@ router.get('/user', authorize, async function(req, res) {
 
 router.get('/gameview/:gameId', authorize, async function(req, res) {
     const { gameId } = req.params;
-    const response = await axios.get(SERVER_URL + '/gamelog?gameId=' + gameId);
+    let response;
+    try {
+        response = await axios.get(SERVER_URL + '/gamelog?gameId=' + gameId);
+    } catch (e) {
+        response = { data: "No connection to backend." }
+    }
     res.status(200).render('gameview', { user: req.user, gameLog: response.data });
 });
 
 router.get('/solution', authorize, async function(req, res) {
-    const response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id);
+    let response;
+    try {
+        response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id);
+    } catch (e) {
+        response = { data: "No connection to backend." }
+    }
+
     res.status(200).render('solution', { user: req.user, code: response.data });
 });
 
 router.get('/solution/:solutionId', authorize, async function(req, res) {
     const { solutionId } = req.params;
-    const response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id + '&solutionId=' + solutionId);
+    let response;
+    try {
+        response = await axios.get(SERVER_URL + '/solutions?team_id=' + req.user.id + '&solutionId=' + solutionId);
+    } catch (e) {
+        response = { data: "No connection to backend." }
+    }
     res.status(200).render('solution', { user: req.user, code: response.data });
 });
 
