@@ -11,7 +11,7 @@ router.get('/', authorize, async function(req, res) {
         response = await axios.get(BACKEND_URL + '/solutions/last?team_id=' + req.user.id);
         const [last_id, cur_id] = response.data;
         for (i = 1; i <= last_id; i++) {
-            solutions.push({ id: i })
+            solutions.push({ id: i, is_active: i === cur_id })
         }
     } catch (e) {
         solutions = [ ];
@@ -53,6 +53,14 @@ router.get('/:solutionId', authorize, async function(req, res) {
         response = { data: "No connection to backend." }
     }
     res.status(200).render('solution', { user: req.user, code: response.data });
+});
+
+router.get('/activate/:solutionId', authorize, async function(req, res) {
+    const { solutionId } = req.params;
+    try {
+        await axios.put(BACKEND_URL + '/solutions/main?team_id=' + req.user.id + '&solution_id=' + solutionId);
+    } catch (e) {}
+    res.redirect('/solutions');
 });
 
 
