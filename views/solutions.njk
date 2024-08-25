@@ -21,12 +21,15 @@
     <table>
         <tr>
             <th>Номер решения</th>
-            <th>Код</th>
+            <th>Действия</th>
         </tr>
         {% for solution in solutions %}
             <tr>
-                <td>{{ solution.id }}</td>
-                <td><a href="/solutions/{{ solution.id }}">Ссылка</a></td>
+                <td>{{ solution.id }}{% if solution.is_active %} - Активное{% endif %}</td>
+                <td>
+                    <a href="/solutions/{{ solution.id }}">Посмотреть</a>
+                    <a href="/solutions/activate/{{ solution.id }}">Сделать активным</a>
+                </td>
             </tr>
         {% endfor %}
     </table>

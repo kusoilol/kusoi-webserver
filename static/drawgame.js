@@ -65,7 +65,7 @@ function parseLogs(logs) {
 
         else if (cmd[0] == "data") {
             tmp = readMove(logs)
-            if (player == 1) {
+            if (player == 0) {
                 res.push(tmp)
             }
         }
@@ -128,16 +128,16 @@ images = {
 }
 
 // load pics
-images.wall.src = "src/sprites/wall.png"
-images.boom.src = "src/sprites/wall.png"
+images.wall.src = "/src/sprites/wall.png"
+images.boom.src = "/src/sprites/wall.png"
 for (i = 1; i <= 3; i++) {
-    images.boom[i].src = "src/sprites/bullet_explosion_" + i + ".png"
+    images.boom[i].src = "/src/sprites/bullet_explosion_" + i + ".png"
 }
 for (dir in images.bullet) {
     for (i = 0; i < 2; i++) {
-        images.tank[i][dir].src = "src/sprites/tank_power_" + dir + "_c0_t1" + ["", "_f"][i] + ".png"
+        images.tank[i][dir].src = "/src/sprites/tank_power_" + dir + "_c0_t1" + ["", "_f"][i] + ".png"
     }
-    images.bullet[dir].src = "src/sprites/bullet_" + dir + ".png"
+    images.bullet[dir].src = "/src/sprites/bullet_" + dir + ".png"
 }
 
 // init
@@ -232,7 +232,7 @@ async function simulate() {
                 if (turn > 0) {
                     drawBoom(moves[turn - 1].p[looser].r, moves[turn - 1].p[looser].c)
                 }
-            } else if (moves[trun].res == "draw") {
+            } else if (moves[turn].res == "draw") {
                 document.getElementById("status").innerText = "Ничья!"
                 drawBoom(moves[turn - 1].p[0].r, moves[turn - 1].p[0].c)
                 drawBoom(moves[turn - 1].p[1].r, moves[turn - 1].p[1].c)
