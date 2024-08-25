@@ -2,6 +2,7 @@
 __readLineIndexer = 0
 function readLine(logs) {
     if (__readLineIndexer < logs.length) {
+        console.log(__readLineIndexer, logs[__readLineIndexer])
         return logs[__readLineIndexer++]
     }
     return ""
@@ -69,9 +70,10 @@ function parseLogs(logs) {
             }
         }
 
-        else if (cmd[0] == "win") {
+        else if (cmd[0] == "win" || cmd[0] == "draw") {
             res.push({
-                type: "win",
+                type: "end",
+                res: cmd[0],
                 who: Number(cmd[1]),
             })
             break
@@ -222,12 +224,18 @@ async function simulate() {
     for (turn = 0; turn < moves.length; turn++) {
         console.log(moves[turn])
 
-        if (moves[turn].type == "win") {
-            let winner = moves[turn].who - 1
-            let looser = 1 - winner
-            document.getElementById("status").innerText = ["Белый", "Красный"][winner] + " победил!"
-            if (turn > 0) {
-                drawBoom(moves[turn - 1].p[looser].r, moves[turn - 1].p[looser].c)
+        if (moves[turn].type == "end") {
+            if (moves[turn].res == "win") {
+                let winner = moves[turn].who - 1
+                let looser = 1 - winner
+                document.getElementById("status").innerText = ["Белый", "Красный"][winner] + " победил!"
+                if (turn > 0) {
+                    drawBoom(moves[turn - 1].p[looser].r, moves[turn - 1].p[looser].c)
+                }
+            } else if (moves[trun].res == "draw") {
+                document.getElementById("status").innerText = "Ничья!"
+                drawBoom(moves[turn - 1].p[0].r, moves[turn - 1].p[0].c)
+                drawBoom(moves[turn - 1].p[1].r, moves[turn - 1].p[1].c)
             }
             break
         }
