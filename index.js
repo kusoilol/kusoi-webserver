@@ -22,7 +22,8 @@ const logger = require('morgan');
 const createError = require('http-errors');
 const path = require("path");
 const {Users} = require("./db");
-const fileUpload = require('express-fileupload')
+const fileUpload = require('express-fileupload');
+require('./tournament_task');
 
 
 // App setup

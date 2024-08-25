@@ -129,7 +129,7 @@ images = {
 }
 
 // load pics
-prefix = "src/sprites/"
+prefix = "/src/sprites/"
 images.wall.src = prefix + "wall.png"
 for (i = 1; i <= 3; i++) {
     images.boom[i].src = prefix + "bullet_explosion_" + i + ".png"
