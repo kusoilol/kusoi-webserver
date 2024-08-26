@@ -16,7 +16,7 @@
         <tr>
             <td>{{ game.timestamp }}</td>
             <td>{{ game.opponent_name }}</td>
-            <td>{% if game.winner === user.id %}Победа{% else %}Поражение{% endif %}</td>
+            <td>{% if game.winner === user.id %}Победа{% elif game.winner === "draw" %}Ничья{% else %}Поражение{% endif %}</td>
             <td><a href="/games/{{ game.game_id }}">Смотреть</a></td>
         </tr>
     {% endfor %}

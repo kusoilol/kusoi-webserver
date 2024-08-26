@@ -1,4 +1,5 @@
 const SECRET = process.env.SECRET;
+const BACKEND_URL = process.env.BACKEND_URL;
 
 const express = require('express');
 const createError = require('http-errors');
@@ -6,6 +7,7 @@ const bcrypt = require('bcrypt');
 const JWT = require('jsonwebtoken');
 const authorize = require("../authorize");
 const { Users } = require('../db')
+const axios = require("axios");
 
 const router = express.Router();
 
@@ -14,7 +16,17 @@ router.get('/', async function(req, res) {
 });
 
 router.get('/leaderboard', async function(req, res) {
-    res.status(200).render('leaderboard', { user: req.user, users: Users.find() });
+    let users = Users.find();
+    for (let i = 0; i < users.length; i++) {
+        try {
+            const req = await axios.get(BACKEND_URL + '/tournament/score?team_id=' + users[i]._id)
+            users[i].score = req.data;
+        } catch (e) {
+            res.redirect('/');
+            return;
+        }
+    }
+    res.status(200).render('leaderboard', { user: req.user, users });
 });
 
 router.get('/tournament', async function(req, res) {
